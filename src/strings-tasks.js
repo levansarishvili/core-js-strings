@@ -459,8 +459,9 @@ function invertCase(str) {
  *   getStringFromTemplate('John','Doe') => 'Hello, John Doe!'
  *   getStringFromTemplate('Chuck','Norris') => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  const result = `Hello, ${firstName} ${lastName}!`;
+  return result;
 }
 
 /**
@@ -473,8 +474,14 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  // Assuming the template structure is 'Hello, First_Name Last_Name!'
+  const matches = value.match(/Hello, (.+?)!/);
+
+  if (matches && matches[1]) {
+    return matches[1];
+  }
+  return ''; // Return an empty string if no match is found
 }
 
 /**
@@ -488,8 +495,11 @@ function extractNameFromTemplate(/* value */) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  let result = '';
+
+  result = str.replace('<', '').replace('>', '');
+  return result;
 }
 
 /**
@@ -507,8 +517,13 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  const emailArray = str.split(';');
+
+  // Remove any leading/trailing whitespaces from each email
+  const cleanedEmails = emailArray.map((email) => email.trim());
+
+  return cleanedEmails;
 }
 
 /**
@@ -527,8 +542,26 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let strRot = '';
+
+  for (let i = 0; i < str.length; i += 1) {
+    const charCode = str.charCodeAt(i);
+
+    // Check if the character is a letter
+    if (charCode >= 65 && charCode <= 90) {
+      // Uppercase letters
+      strRot += String.fromCharCode(((charCode - 65 + 13) % 26) + 65);
+    } else if (charCode >= 97 && charCode <= 122) {
+      // Lowercase letters
+      strRot += String.fromCharCode(((charCode - 97 + 13) % 26) + 97);
+    } else {
+      // If it's not a letter, keep the character unchanged
+      strRot += str[i];
+    }
+  }
+
+  return strRot;
 }
 
 /**
@@ -555,8 +588,63 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const str = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+
+  return str.indexOf(value);
 }
 
 module.exports = {
